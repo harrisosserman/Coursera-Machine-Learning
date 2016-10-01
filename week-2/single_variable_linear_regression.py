@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy
+
 ALPHA = 0.023
 
 coordinates = []
@@ -29,3 +32,10 @@ for iteration in range(0, 8000):
 	theta_1 = theta_1 - ALPHA * 1 / len(coordinates) * total_error_theta_1
 
 print "THETA_0", theta_0, "THETA_1", theta_1
+print "ERROR_THETA_0", total_error_theta_0, "ERROR_THETA_1", total_error_theta_1
+
+plt.scatter([x_column[0] for x_column in coordinates], [y_column[1] for y_column in coordinates])
+x_data_points = numpy.linspace(0, 30, 1000)
+y_data_points = [h_function(x_data_point) for x_data_point in x_data_points]
+plt.plot(x_data_points, y_data_points)
+plt.show()
