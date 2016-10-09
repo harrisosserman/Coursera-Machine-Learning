@@ -20,7 +20,7 @@ def gradient(theta_transpose_times_x, x, output):
 
 theta_0 = 0
 theta_1 = 0
-for iteration in range(0, 16000):
+for iteration in range(0, 800):
 	theta_0_derivative = 0.0
 	theta_1_derivative = 0.0
 	for index in range(len(coordinates)):
@@ -32,4 +32,11 @@ for iteration in range(0, 16000):
 	theta_1 = theta_1 - ALPHA * (1.0 / len(coordinates)) * theta_1_derivative
 	print "theta_0", theta_0, "theta_1", theta_1
 
+def cost_function(theta, x, y):
+	theta_transpose_times_x = theta[0] * x[0] + theta[1] * x[1]
+	print "theta_transpose_times_x", theta_transpose_times_x
+	return (-1.0) * y * math.log(sigmoid(theta_transpose_times_x)) - (1.0 - y) * math.log(sigmoid(1.0 - theta_transpose_times_x))
+
+plt.scatter([cost_function([theta_0, theta_1], [x[0], x[1]], x[2]) for x in coordinates], [y_column[2] for y_column in coordinates])
+plt.show()
 
