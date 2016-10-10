@@ -4,6 +4,7 @@ import math
 from sklearn.preprocessing import PolynomialFeatures
 
 ALPHA = .005
+LAMBDA = 1
 
 coordinates = []
 with open('ex2data2.txt') as inputfile:
@@ -23,19 +24,22 @@ def gradient(theta_transpose_times_x, x, output):
 poly = PolynomialFeatures(degree=6)
 polynomial_features = poly.fit_transform(map(lambda row:[row[0], row[1]], coordinates))
 
+theta = numpy.ones(len(polynomial_features[0]))
 
-# for index in range(len(coordinates)):
-# 	x1 = coordinates[index][0]
-# 	x2 = coordinates[index][1]
-# 	# coordinates[index] = [1, x1, x2, x1*x2, x1^2, x1^2 * x2, x1 * x2 ^2, x2^2, x1^3]
+for iteration in range(0, 5000):
+	theta_derivatives = numpy.zeros(len(polynomial_features[0]))
+	for index in range(len(coordinates)):
+		prediction_for_row = sigmoid(numpy.dot(theta, coordinates[index][2]))
+		for feature in range(len(polynomial_features[0])):
+			theta_derivatives[feature] += prediction_for_row * polynomial_features[index][feature]
+	for feature in range(len(polynomial_features[0])):
+		if feature == 0:
+			theta_derivatives[feature] = (1.0 / len(coordinates)) * theta_derivatives[feature]
+		else:
+			theta_derivatives[feature] = (1.0 / len(coordinates)) * theta_derivatives[feature] + (LAMBDA / len(coordinates)) * theta[feature]
+		theta[feature] = theta[feature] - ALPHA * theta_derivatives[feature]
+		print theta
 
-
-
-# gradient_0 = []
-# gradient_1 = []
-
-# theta_0 = 0
-# theta_1 = 0
 # for iteration in range(0, 1):
 # 	theta_0_derivative = 0.0
 # 	theta_1_derivative = 0.0
