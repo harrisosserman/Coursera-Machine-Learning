@@ -26,10 +26,10 @@ polynomial_features = poly.fit_transform(map(lambda row:[row[0], row[1]], coordi
 
 theta = numpy.ones(len(polynomial_features[0]))
 
-for iteration in range(0, 5000):
+for iteration in range(0, 15000):
 	theta_derivatives = numpy.zeros(len(polynomial_features[0]))
 	for index in range(len(coordinates)):
-		prediction_for_row = sigmoid(numpy.dot(theta, coordinates[index][2]))
+		prediction_for_row = sigmoid(numpy.dot(theta, coordinates[index][2] * numpy.ones(len(theta))))
 		for feature in range(len(polynomial_features[0])):
 			theta_derivatives[feature] += prediction_for_row * polynomial_features[index][feature]
 	for feature in range(len(polynomial_features[0])):
@@ -38,7 +38,10 @@ for iteration in range(0, 5000):
 		else:
 			theta_derivatives[feature] = (1.0 / len(coordinates)) * theta_derivatives[feature] + (LAMBDA / len(coordinates)) * theta[feature]
 		theta[feature] = theta[feature] - ALPHA * theta_derivatives[feature]
-		print theta
+print theta
+
+
+
 
 # for iteration in range(0, 1):
 # 	theta_0_derivative = 0.0
