@@ -24,7 +24,7 @@ def unregularized_gradient(theta, x, y):
 	h_minus_y = h - numpy.matrix(y)
 	print 'transpose x: ', numpy.transpose(x).shape
 	print 'h minus y: ', h_minus_y.shape
-	return (1.0 / len(y)) * numpy.multiply(numpy.transpose(x), h_minus_y)
+	return (1.0 / len(y)) * numpy.dot(numpy.transpose(x), h_minus_y)
 
 
 test_theta = numpy.ones((len(mat['X'][0]), 1))
