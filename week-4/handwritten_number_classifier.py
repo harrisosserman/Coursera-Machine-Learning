@@ -15,17 +15,20 @@ def calculate_h(theta, x):
 	return h
 
 def unregularized_cost_function(theta, x, y):
-	# TODO: make a regularized cost function to pass into optimizing func
 	h = calculate_h(theta, x)
 	log_h = numpy.log(h)
 	log_1_minus_h = numpy.log(1 - h)
 	print 'y shape: ', y.shape
 	print 'log_h_shape ', log_h.shape
 	print 'log_1_minus', log_1_minus_h.shape
-	summation = -1 * numpy.dot(numpy.transpose(y), log_h) - numpy.dot((1 - numpy.transpose(y)), log_1_minus_h)
-	print 'summation; ', summation
-	return (1.0 / len(y)) * summation
+	summation_of_unregularized_cost = -1 * numpy.dot(numpy.transpose(y), log_h) - numpy.dot((1 - numpy.transpose(y)), log_1_minus_h)
+	summation_of_unregularized_cost = (1.0 / len(y)) * summation_of_unregularized_cost
+	return summation_of_unregularized_cost
 
+def regularized_cost_function(theta, x, y):
+	summation_of_unregularized_cost = unregularized_cost_function(theta, x, y)
+	regularization_term = (0.1 / (2.0 * len(y))) * numpy.sum(numpy.power(theta, 2))
+	return summation_of_unregularized_cost + regularization_term
 
 def unregularized_gradient(theta, x, y):
 	h = calculate_h(theta, x)
@@ -40,7 +43,7 @@ def regularized_gradient_helper(theta, *args):
 	return regularized_gradient(theta, args[0], args[1])
 
 def regularized_cost_helper(theta, *args):
-	return unregularized_cost_function(theta, args[0], args[1])
+	return regularized_cost_function(theta, args[0], args[1])
 
 
 initial_theta = numpy.ones((len(mat['X'][0]), 1))
