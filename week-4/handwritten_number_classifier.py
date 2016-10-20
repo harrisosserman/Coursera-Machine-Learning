@@ -8,7 +8,7 @@ print "=====all keys: ", mat.keys()
 
 def calculate_h(theta, x):
 	theta_x = numpy.dot(x, theta)
-	h = 1.0/(1.0 + numpy.exp(theta_x))
+	h = 1.0/(1.0 + numpy.exp(-1.0 * theta_x))
 	return h
 
 def unregularized_cost_function(theta, x, y):
