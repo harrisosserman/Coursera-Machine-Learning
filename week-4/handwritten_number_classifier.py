@@ -37,7 +37,9 @@ def regularized_gradient(theta, x, y):
 
 def regularized_gradient_helper(theta, *args):
 	print 'in gradient helper, sizes are: ', theta.shape, args[0].shape, args[1].shape
-	return regularized_gradient(theta, args[0], args[1])
+	output = numpy.ravel(regularized_gradient(theta, args[0], args[1]).sum(axis=0))
+	print "regularized gradient helper flattened: ", output.shape
+	return output
 
 def regularized_cost_helper(theta, *args):
 	print 'in cost helper, sizes are: ', theta.shape, args[0].shape, args[1].shape
@@ -48,8 +50,12 @@ initial_theta = numpy.random.rand(1, len(mat['X'][0]))
 # print 'output of unregularized gradient: ', unregularized_gradient(initial_theta, mat['X'], mat['y'])
 # print 'output of regularized gradient: ', regularized_gradient(initial_theta, mat['X'], mat['y'])
 
+
+def done_with_iteration(output):
+	print '===DONE WITH ITERATION: ', output
+
 # iteration maps to the digit that we are building a classifier for (1-10)
 for iteration in range(1, 10):
 	y_vector = numpy.transpose(map(lambda row:1 if ((row[0] % iteration == 0 or (row[0] == 0 and iteration == 10))) else 0, mat['y']))
-	response = scipy.optimize.fmin_cg(regularized_cost_helper, initial_theta, regularized_gradient_helper, args=(mat['X'], y_vector))
+	response = scipy.optimize.fmin_cg(regularized_cost_helper, initial_theta, regularized_gradient_helper, args=(mat['X'], y_vector), full_output=True, callback=done_with_iteration)
 	print response
