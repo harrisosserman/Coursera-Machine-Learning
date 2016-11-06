@@ -18,11 +18,11 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
-J = (sum((X * theta .- y).^2) + sum(theta.^2) .* lambda) * 1 / (2 * m)
+J = (sum((X * theta .- y).^2) + sum(theta(2:end, :).^2) .* lambda) * 1 / (2 * m)
 
 intermediate_error = X * theta .- y;
 intermediate_left_side = intermediate_error .* X;
-grad = (1 / m) * sum(intermediate_left_side, 1) - lambda / m .* theta'
+grad = (1 / m) * sum(intermediate_left_side, 1) + [0, lambda / m .* theta(2:end, :)']
 
 
 
