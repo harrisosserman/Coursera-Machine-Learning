@@ -15,10 +15,23 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
+% if (p == 1) 
+%     X_poly = X(:);
+% else
+%     v = X(:).^p;
+%     X_poly = [polyFeatures(X,p-1) v];
+% endif
 
 
 
+for i = 1:p
+  X_poly(:, i) = X.^i;
+endfor
 
+%disp("x_poly is")
+%disp(size(x_poly))
+%disp("x is: ")
+%disp(size(X))
 
 % =========================================================================
 
