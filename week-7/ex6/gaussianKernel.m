@@ -19,9 +19,9 @@ sim = 0;
 
 
 difference = (x1 .- x2);
-squared_difference = difference .^2
-sum_of_squared_differences = sum(squared_difference)
-sim = exp(-1 * sum_of_squared_differences / (2 * sigma ^ 2))
+squared_difference = difference .^2;
+sum_of_squared_differences = sum(squared_difference);
+sim = exp(-1 * sum_of_squared_differences / (2 * sigma ^ 2));
 
 
 % =============================================================
